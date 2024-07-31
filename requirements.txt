@@ -1,0 +1,8 @@
+# This file lists the dependencies required for your Python application.
+# You can use this file to install the dependencies using `pip`.
+
+pydub==0.25.1
+google-cloud-speech==2.26.1
+google-cloud-storage==1.42.0
+absl-py==0.14.1
+grpcio==1.63.0
