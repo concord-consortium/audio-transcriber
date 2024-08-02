@@ -1,8 +1,11 @@
-# This file lists the dependencies required for your Python application.
-# You can use this file to install the dependencies using `pip`.
+# This file lists the dependencies required for the Python application.
+# You can use this file to install the dependencies using `pip install -r requirements.txt`.
+
+# Note grpcio is not the latest version, but more recent versions print out irrelevant warnings
 
 pydub==0.25.1
-google-cloud-speech==2.26.1
-google-cloud-storage==1.42.0
-absl-py==0.14.1
+google-cloud-speech==2.27.0
+google-cloud-storage==2.18.0
+absl-py==2.1.0
 grpcio==1.63.0
+setuptools==72.1.0

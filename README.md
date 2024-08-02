@@ -9,6 +9,7 @@ This script requires you to have a Google Cloud project with the Speech API enab
 - Set up Google Cloud project and access to that project for users of this script.
 - Make sure billing is enabled.
 - Activate the Google Cloud Speech-to-Text API for the project.
+- Create a storage bucket for temporarily holding audio files; put its name in the script
 
 You must also have the Google Cloud command-line tools set up on the machine you will use to run this script.
 
