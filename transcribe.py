@@ -2,6 +2,8 @@
 
 # See README for prerequisites and setup instructions.
 
+# TODO: try API v2 or other models; see which has the best results.
+
 import os
 import sys
 import tempfile
@@ -42,10 +44,10 @@ def convert_to_flac(audio_file_path, temp_flac_file):
     return temp_flac_file
 
 
-def upload_file_to_bucket(file):
+def upload_file_to_bucket(file) -> str:
     """Uploads a file to the Google Cloud Storage bucket, returns URL"""
     filename = os.path.basename(file.name)
-    print(f"Uploading to {bucket_name}/{filename}...")
+    print(f"Uploading to Google Cloud...")
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(filename)
     blob.upload_from_filename(file.name)
@@ -77,7 +79,7 @@ def transcribe_url(uri) -> speech.RecognizeResponse:
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.FLAC,
         model="latest_long",
-        # enable_automatic_punctuation=True,
+        enable_automatic_punctuation=True,
         language_code="en-US",
         diarization_config=speaker_diarization_config,
     )
@@ -86,23 +88,47 @@ def transcribe_url(uri) -> speech.RecognizeResponse:
     return response
 
 
+def format_duration(seconds):
+    """Formats a duration in seconds into HH:MM:SS format."""
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{int(hours):02}:{int(minutes):02}:{seconds:06.3f}"
+
+
+def print_transcript_line(time, speaker, text):
+    """Prints a line of the transcript with the time, speaker, and text."""
+    if text != "":
+        print(f"{format_duration(time)};{speaker};{text}")
+
 def print_transcript(response: speech.RecognizeResponse):
     """Prints the transcript from the Google Speech-to-Text API response."""
-    # There are two ways to look through the results:
-    # Iterate through response.results, looking at the first (highest confidence) alternative and getting its transcript.
-    # Or, look at the first alternative of the last result, and iterate its "words", which should have all the words from the audio.
-    # Each of the words has fields "word", "confidence", "speaker_tag" and "speaker_label" (as well as timing info)
-    confidences = []
-    print("Transcript:")
-    for result in response.results:
-       confidences.append(result.alternatives[0].confidence)
-       print(result.alternatives[0].transcript)
+    # To just get the text from a RecognizeResponse, you can iterate through
+    # response.results, looking at the first (highest confidence) alternative
+    # and getting its transcript. 
+    # 
+    # However, the speaker identification is only shown in the final response,
+    # so we have to look at the first alternative of the last result, and
+    # iterate its "words", which should have all the words from the audio. 
+    # 
+    # Each of the words has fields "word", "speaker_tag" and "speaker_label"
+    # (which are essentially the same), "start_time" and "end_time".
 
-    print("Words with speaker tags:")
+    # Header row
+    print("Time;Speaker;Text")
+
+    current_time = None
+    current_speaker = None
+    current_text = ""
     for word in response.results[-1].alternatives[0].words:
-        print(f"{word.word}({word.speaker_label})")
-
-    print(f"Confidence range: {min(confidences)} - {max(confidences)}, average: {sum(confidences)/len(confidences)}")
+        if word.speaker_label != current_speaker:
+            # New speaker identified; start a new line of output
+            print_transcript_line(current_time, current_speaker, current_text)
+            current_text = ""
+            current_time = word.start_time.seconds
+            current_speaker = word.speaker_label
+        current_text += word.word + " "
+    # print the last line
+    print_transcript_line(current_time, current_speaker, current_text)
 
 
 #### Main ####
