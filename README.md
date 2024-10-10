@@ -15,7 +15,8 @@ You must also have the Google Cloud command-line tools set up on the machine you
 
 - Install the gcloud command line tools following the steps in [the official documentation](https://cloud.google.com/sdk/docs/install)
 - Follow the steps all the way through running `gcloud init`.
-- When asked for a default project, use the one just created above.
+  - When asked for a default project, use the one just created above.
+- Log in to Google Cloud: `gcloud auth application-default login`
 
 ## Installation
 
