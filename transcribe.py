@@ -84,7 +84,7 @@ def transcribe_url(uri) -> speech.RecognizeResponse:
         diarization_config=speaker_diarization_config,
     )
     operation = client.long_running_recognize(config=config, audio=audio)
-    response = operation.result()    # could add timeout=90 to wait up to 90 seconds
+    response = operation.result(timeout=1800)  # Allow up to 30 minutes
     return response
 
 
