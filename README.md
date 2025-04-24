@@ -96,10 +96,10 @@ The CSV file will be saved in the same directory as your input file, with the sa
 
 #### Limitations of FasterWhisper
 
-- No speaker identification/diarization
 - Transcription quality may vary depending on audio quality, accents, and background noise
 - The large-v2 model requires approximately 1GB of disk space
 - Processing time depends on the length of the audio file and your computer's capabilities
+- Speaker diarization is basic and may not be as accurate as specialized diarization models
 
 #### Requirements for FasterWhisper
 
@@ -111,6 +111,16 @@ The CSV file will be saved in the same directory as your input file, with the sa
   - pydub
   - numpy
   - torch
+  - scipy (for speaker diarization)
+
+#### Speaker Diarization
+
+The FasterWhisper script now includes basic speaker diarization capabilities:
+- Uses spectrogram-based feature extraction and k-means clustering
+- Identifies different speakers in the audio
+- Outputs speaker labels (Speaker 1, Speaker 2, etc.) in the CSV file
+- Default number of speakers is 6, but can be adjusted in the code
+- No external models required for diarization
 
 ## License
 
