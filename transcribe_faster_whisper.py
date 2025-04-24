@@ -51,7 +51,7 @@ def extract_audio_features(audio_path, window_size=0.5):
     
     return np.array(features)
 
-def perform_diarization(audio_path, num_speakers=2):
+def perform_diarization(audio_path, num_speakers=6):
     """Performs basic speaker diarization using clustering."""
     try:
         # Extract features
