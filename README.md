@@ -1,8 +1,12 @@
 # Audio Transcriber
 
-This is a Python script to transcribe audio using the Google Speech API.
+This repository contains two Python scripts for transcribing audio:
+1. `transcribe.py` - Uses Google Speech API
+2. `transcribe_faster_whisper.py` - Uses FasterWhisper (offline transcription)
 
 ## Prerequisites
+
+### For Google Speech API (transcribe.py)
 
 This script requires you to have a Google Cloud project with the Speech API enabled (which requires billing to be enabled).
 
@@ -17,6 +21,12 @@ You must also have the Google Cloud command-line tools set up on the machine you
 - Follow the steps all the way through running `gcloud init`.
   - When asked for a default project, use the one just created above.
 - Log in to Google Cloud: `gcloud auth application-default login`
+
+### For FasterWhisper (transcribe_faster_whisper.py)
+
+- Python 3.8 or higher
+- FFmpeg for audio processing
+- Sufficient disk space for the FasterWhisper model (approximately 1GB for the large-v2 model)
 
 ## Installation
 
@@ -44,6 +54,8 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Google Speech API (transcribe.py)
+
 `cd` to the application directory
 
 Make sure the virtual environment has been activated:
@@ -57,6 +69,48 @@ And run the script, passing the path to the audio file you want to transcribe as
 ```shell
 ./transcribe.py ~/Documents/my-audio.m4a
 ```
+
+### FasterWhisper (transcribe_faster_whisper.py)
+
+`cd` to the application directory
+
+Make sure the virtual environment has been activated:
+
+```shell
+source venv/bin/activate
+```
+
+Run the script with your audio file:
+
+```shell
+python3 transcribe_faster_whisper.py path/to/your/audio/file.mp4
+```
+
+The script will:
+- Convert the audio to WAV format
+- Load the FasterWhisper model
+- Transcribe the audio
+- Output the transcription to both the console and a CSV file
+
+The CSV file will be saved in the same directory as your input file, with the same name but a `.csv` extension.
+
+#### Limitations of FasterWhisper
+
+- No speaker identification/diarization
+- Transcription quality may vary depending on audio quality, accents, and background noise
+- The large-v2 model requires approximately 1GB of disk space
+- Processing time depends on the length of the audio file and your computer's capabilities
+
+#### Requirements for FasterWhisper
+
+- Python 3.8 or higher
+- FFmpeg installed and accessible in your PATH
+- Sufficient disk space for the model
+- The following Python packages (installed via requirements.txt):
+  - faster-whisper
+  - pydub
+  - numpy
+  - torch
 
 ## License
 
