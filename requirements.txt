@@ -6,6 +6,7 @@
 # Common dependencies
 pydub==0.25.1
 numpy==1.26.4
+scipy==1.15.2
 
 # Google Speech API dependencies
 google-cloud-speech==2.27.0
@@ -17,3 +18,6 @@ setuptools==72.1.0
 # FasterWhisper dependencies
 faster-whisper==0.10.0
 torch==2.2.0
+
+# Speaker diarization (optional)
+pyannote.audio==3.1.1
