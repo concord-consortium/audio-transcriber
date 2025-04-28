@@ -4,20 +4,23 @@
 # Note grpcio is not the latest version, but more recent versions print out irrelevant warnings
 
 # Common dependencies
-pydub==0.25.1
-numpy==1.26.4
-scipy==1.15.2
+pydub>=0.25.1,<0.26.0
+numpy>=1.26.4,<1.27.0
+scipy>=1.15.2,<1.16.0
 
 # Google Speech API dependencies
-google-cloud-speech==2.27.0
-google-cloud-storage==2.18.0
-absl-py==2.1.0
-grpcio==1.63.0
-setuptools==72.1.0
+google-cloud-speech>=2.27.0,<3.0.0
+google-cloud-storage>=2.18.0,<3.0.0
+absl-py>=2.1.0,<3.0.0
+grpcio>=1.63.0,<2.0.0
+setuptools>=72.1.0,<73.0.0
 
 # FasterWhisper dependencies
-faster-whisper==0.10.0
-torch==2.2.0
+faster-whisper>=0.10.0,<0.11.0
+torch>=2.2.0,<3.0.0
 
 # Speaker diarization (optional)
-pyannote.audio==3.1.1
+pyannote.audio>=3.1.1,<4.0.0
+
+# Security dependencies
+cryptography>=42.0.0,<43.0.0
