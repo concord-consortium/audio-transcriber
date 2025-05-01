@@ -13,8 +13,6 @@ from faster_whisper import WhisperModel
 
 def usage():
     sys.stderr.write("Usage: " + sys.argv[0] + " audio_file_path\n")
-    sys.stderr.write("Note: You need to set the HUGGING_FACE_TOKEN environment variable with your Hugging Face token.\n")
-    sys.stderr.write("      Get your token from https://huggingface.co/settings/tokens\n")
     exit(1)
 
 def convert_to_wav(audio_file_path, temp_wav_file):
