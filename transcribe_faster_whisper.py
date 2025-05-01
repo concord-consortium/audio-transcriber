@@ -64,12 +64,10 @@ def transcribe_audio(audio_path, output_csv_path):
         for segment in segments:
             start_time = segment.start
             
-            current_text = ""
-            for word in segment.words:
-                if current_text:
-                    current_text += " "
-                current_text += word.word
-                
+            # Join words with a single space and clean up any extra spaces
+            current_text = " ".join(word.word for word in segment.words)
+            current_text = " ".join(current_text.split())  # Remove extra spaces
+            
             if current_text.strip():
                 print_transcript_line(start_time, current_text.strip(), csv_writer)
 
