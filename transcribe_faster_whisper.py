@@ -2,7 +2,7 @@
 
 # See README for prerequisites and setup instructions.
 
-# TODO: speaker diarization model to get speaker labels.
+# TODO: try API v2 or other models; see which has the best results.
 
 import os
 import sys
